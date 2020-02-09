@@ -1,0 +1,37 @@
+*********github*************************
+Error happens if you initialized a new github repo with README and/or LICENSE file
+
+git remote add origin [//your github url]
+
+//pull those changes
+
+git pull origin master 
+
+// or optionally, 'git pull origin master --allow-unrelated-histories' if you have initialized repo in github and also committed locally
+
+//now, push your work to your new repo
+
+git push origin master
+
+Now you will be able to push your repository to github. Basically, you have to merge those new initialized files with your work. git pull fetches and merges for you. You can also fetch and merge if that suits you.
+
+***************************************
+yarn global add expo-cli@3.9.1
+
+    This will make the command line tool for creating React Native applications. Close your terminal and open a new one before you continue. 
+    To confirm your installation and see the various commands you have available, type at the prompt:
+
+expo-cli
+
+https://github.com/FrostyDesigner/nucampsite-react-native.git
+
+git remote add origin https://github.com/FrostyDesigner/nucampsite-react-native.git
+
+
+
+git clone https://github.com/FrostyDesigner/nucampsite-react-native.git
+
+
+*************************************************
+
+yarn add react-native-elements@1.2.0
