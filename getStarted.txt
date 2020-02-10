@@ -34,4 +34,10 @@ git clone https://github.com/FrostyDesigner/nucampsite-react-native.git
 
 *************************************************
 
+yarn install
+
 yarn add react-native-elements@1.2.0
+
+yarn add react-navigation@2.0.1
+
+******************************************
