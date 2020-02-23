@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import Loading from './LoadingComponent';
 
+//The most basic workflow for creating an animation is to create an Animated.Value, 
+// hook it up to one or more style attributes of an animated component, and then 
+// drive updates via animations using Animated.timing():
 
 const mapStateToProps = state => {
     return { 
@@ -48,11 +51,13 @@ class Home extends Component {
 
     constructor(props) {
         super(props);
+        // this prop does not need to be named "scaleValue", just a descriptive name
         this.state = {
             scaleValue: new Animated.Value(0)
         };
     }
 
+    // custom method to scale the value from 0 to 1 in a preset time
     animate() {
         Animated.timing(
             this.state.scaleValue,

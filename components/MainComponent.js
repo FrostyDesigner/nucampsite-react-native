@@ -13,6 +13,11 @@ import SafeAreaView from 'react-native-safe-area-view';
 import { connect } from 'react-redux';
 import { fetchCampsites, fetchComments, fetchPromotions, fetchPartners } from '../redux/ActionCreators';
 
+// method to add component to the MainComponent Navigation
+// or to integrate the new component
+// 1. Import the new component
+// 2. Add a stack navigator by copying an existing stack navigator and changing the properties
+// 3. Add a drawer navigator by copying an existing drawer navigator and changing the properties
 
 const mapDispatchToProps = {
     fetchCampsites,

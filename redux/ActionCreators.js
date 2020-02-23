@@ -162,13 +162,14 @@ export const postFavorite = campsiteId => dispatch => {
     }, 2000);
 };
 
-
-
 export const addFavorite = campsiteId => ({
     type: ActionTypes.ADD_FAVORITE,
     payload: campsiteId
 });
 
+// add new action creator...
+// use campsiteId as parameter
+// must update the favorites reducer in favorites.js
 export const deleteFavorite = campsiteId => ({
     type: ActionTypes.DELETE_FAVORITE,
     payload: campsiteId

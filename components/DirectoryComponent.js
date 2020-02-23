@@ -24,6 +24,8 @@ class Directory extends Component {
         const { navigate } = this.props.navigation;
         const renderDirectoryItem = ({item}) => {
             return (
+                // you can just wrap existing objects in the animatable.View
+                // check documentation for different animations
                 <Animatable.View animation='fadeInRightBig' duration={2000}>
                     <Tile
                         title={item.name}

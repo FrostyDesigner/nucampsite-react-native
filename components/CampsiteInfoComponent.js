@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, FlatList, Modal, Button, StyleSheet } from 'react-native';
+import { Text, View, ScrollView, FlatList,
+    Modal, Button, StyleSheet,
+    Alert, PanResponder } from 'react-native';
 import { Card, Icon, Rating, Input } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
@@ -24,9 +26,64 @@ function RenderCampsite(props) {
 
     const {campsite} = props;
 
+    const view = React.createRef();
+
+    const recognizeDrag = ({dx}) => (dx < -200) ? true : false;
+
+    // Implement a new function inside the RenderCampsite component 
+    // named recognizeComment. This should return true for a gesture from 
+    // left to right that is over 200px, and false otherwise. This will be 
+    // similar to how you implemented the recognizeDrag function, but your 
+    // gesture will be in the opposite direction.
+    const recognizeComment = ({dx}) => (dx > 200) ? true : false;
+
+    const panResponder = PanResponder.create({
+        onStartShouldSetPanResponder: () => true,
+        onPanResponderGrant: () => {
+            view.current.rubberBand(1000)
+            .then(endState => console.log(endState.finished ? 'finished' : 'canceled'));
+        },
+        // use the recognizeComment function in the onPanResponderEnd panHandler. 
+        // If the check for recognizeDrag returns false, then add an else if statement 
+        // that will check if the recognizeComment function returns true, passing it 
+        // the argument of gestureState. 
+        onPanResponderEnd: (e, gestureState) => {
+            console.log('pan responder end', gestureState);
+            if (recognizeDrag(gestureState)) {
+                Alert.alert(
+                    'Add Favorite',
+                    'Are you sure you wish to add ' + campsite.name + ' to favorites?',
+                    [
+                        {
+                            text: 'Cancel',
+                            style: 'cancel',
+                            onPress: () => console.log('Cancel Pressed')
+                        },
+                        {
+                            text: 'OK',
+                            onPress: () => props.favorite ?
+                                console.log('Already set as a favorite') : props.markFavorite()
+                        }
+                    ],
+                    { cancelable: false }
+                )
+            }else if (recognizeComment(gestureState)) {
+                props.onShowModal();
+            }
+            return true;
+        }
+    });
+
+
+
     if (campsite) {
         return (
-            <Animatable.View animation='fadeInDown' duration={2000} delay={1000}>
+            <Animatable.View 
+                animation='fadeInDown' 
+                duration={2000} 
+                delay={1000}
+                ref={view}
+                    {...panResponder.panHandlers}>
                 <Card
                     featuredTitle={campsite.name}
                     image={{uri: baseUrl + campsite.image}}>
@@ -66,7 +123,7 @@ function RenderComments({comments}) {
     const renderCommentItem = ({item}) => {
         return (
             <View style={{margin: 10}}>
-                <Text style={{fontSite:14}}>{item.text}</Text>
+                <Text style={{fontSize:14}}>{item.text}</Text>
                 <Rating
                     readonly
                     imageSize={10}
@@ -143,7 +200,8 @@ resetForm() {
         const comments = this.props.comments.comments.filter(comment => comment.campsiteId === campsiteId);
         return ( 
             <ScrollView> 
-                <RenderCampsite campsite={campsite} 
+                <RenderCampsite 
+                    campsite={campsite} 
                     favorite={this.props.favorites.includes(campsiteId)}
                     markFavorite={() => this.markFavorite(campsiteId)}
                     onShowModal={() => this.toggleModal()}
@@ -173,7 +231,7 @@ resetForm() {
                     <Input
                         placeholder='Comment'
                         leftIcon = {{type: 'font-awesome', name: 'comment-o'}}
-                        leftIconContainerStyle  ={{paddingVerticat: 10}}
+                        leftIconContainerStyle  ={{paddingVertical: 10}}
                         onChangeText= {text => this.setState({text: text})}
                         value = {this.state.text}
                     /> 
