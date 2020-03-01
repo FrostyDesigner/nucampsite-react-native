@@ -343,6 +343,7 @@ class Main extends Component {
 
 // the netInfo.fetch is breaking the app
 // reverting back to working state for now...
+// not able to get this part working even before the week 4 challenge...
 
     //     NetInfo.fetch().then(connectionInfo => {
     //         (Platform.OS === 'ios') ?
